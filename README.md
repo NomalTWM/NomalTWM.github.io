@@ -1,2 +1,2 @@
 # NomalTWM.github.io
-My test website
+Testing website to improve my HTML, CSS and JavaScript skills.
