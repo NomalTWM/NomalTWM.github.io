@@ -6,3 +6,51 @@ body {
 }
 h1 {}
 p {}
+a:link {
+  color: rgb(0, 90, 192);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: rgb(17, 146, 197);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(0, 68, 255);
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: rgb(132, 0, 255);
+  background-color: transparent;
+  text-decoration: underline;
+}
+/* This next bit is from https://www.w3schools.com/css/css_intro.asp
+
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}*/
