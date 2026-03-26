@@ -1,6 +1,41 @@
-*{
-    color:black;
+body {
     font-family: Arial;
     background-color:azure;
     text-align: left;
+    color:rgb(0, 0, 0);
+}
+h1 {}
+p {}
+.link {
+  text-decoration: none;
+  border-radius: 5px;
+  border-color: black;
+  border-style: solid;
+  border-left: 5px;
+  border-color:blue;
+  padding: 2px;
+  margin: 25px;
+}
+a:link {
+  color: rgb(0, 90, 192);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: rgb(17, 146, 197);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(0, 68, 255);
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: rgb(132, 0, 255);
+  background-color: transparent;
+  text-decoration: underline;
 }
