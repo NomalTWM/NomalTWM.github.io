@@ -10,8 +10,9 @@ p {}
   text-decoration: none;
   border-radius: 5px;
   border-color: black;
-  border-style: groove;
-  border-width: 1px;
+  border-style: solid;
+  border-left: 5px;
+  border-color:blue;
   padding: 2px;
   margin: 25px;
 }
