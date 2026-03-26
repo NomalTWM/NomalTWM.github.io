@@ -7,10 +7,13 @@ body {
 h1 {}
 p {}
 .link {
+  text-decoration: none;
   border-radius: 5px;
-  border-color: aliceblue;
-  border-style: solid;
+  border-color: black;
+  border-style: groove;
   border-width: 1px;
+  padding: 2px;
+  margin: 25px;
 }
 a:link {
   color: rgb(0, 90, 192);
