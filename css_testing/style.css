@@ -3,21 +3,7 @@ body {
     background-color:#f0f4f8;
     line-height: 1.6;
 }
-/* h1 {
 
-  border-left: 0.1em solid blue;
-  border-radius: 0.3em;
-
-  border-top: 0.1em solid blue;
-
-  border-bottom: 0.001em solid blue;
-  border-right: 0.001em solid blue;
-
-  
-  width: 6.25em;
-  padding: 0.1em;
-  background-color: white;
-} */
 h1, h2, h3 {
   border-left: 0.2em solid rgb(0, 90, 192);
   border-radius: 0.2em;
