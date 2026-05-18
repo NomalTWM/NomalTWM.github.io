@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="Author" content="Nicholas Hauptfleisch">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Audio API Testing</title>
+</head>
+
+<body>
+    <h1>Web Audio API Testing</h1>
+    <p> Return to <a href="web_audio_api_testing_landing_page.html">Landing Page</a></p><hr>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> is a powerful tool for handling audio in web applications.</p>
+    <p>This page is my first testing using the Web Audio API. I am using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API"> this guide</a> to help</p>
+
+
+    <!--buttons-->
+    <p>Basic sound file playing.</p>
+    <button id="honk-button" data-playing="false" role="switch" aria-checked="false">
+        <span>HONK</span>
+    </button>
+
+    <p>Sound file playing with play/pause, volume and panning options</p>
+    <button id="my-sample-button" data-playing="false" role="switch" aria-checked="false" onclick="changeLabel()">
+        Play sample music
+    </button><br>
+    
+
+    <!--range slider for volume control-->
+    <p>Gain:
+    <input type="range" id="volume" min="-2" max="0" value="-1" step="0.01" /> <!--I lowk don't understand how web audio API handles gain :(-->
+    </p>
+
+    <!--range slider for panning control-->
+    <p>Panning:
+    <input type="range" id="panning" min="-1" max="1" value="0" step="0.01" />
+    </p>
+
+    <!--audio elements-->
+    <audio id="goose_honk" class="sfx">
+        <source src="assets/Honk1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="nicholas_hauptfleisch_sample" class="music">
+        <source src="assets/nicholas_hauptfleisch_sample.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+ <!--Scripts-->
+    <script>
+        const context = new AudioContext();
+        const audioElement = document.querySelector("#nicholas_hauptfleisch_sample");
+        const track = context.createMediaElementSource(audioElement);
+        track.connect(context.destination);
+
+        const mySampleButton = document.querySelector('#my-sample-button');
+        const honkButton = document.querySelector('#honk-button');
+
+        const gainNode = context.createGain();
+        gainNode.gain.value = -1; 
+        track.connect(gainNode).connect(context.destination);
+
+        const volumeControl = document.querySelector('#volume');
+
+        const pannerOptions = { pan: 0 };
+        const panner = new StereoPannerNode(context, pannerOptions);
+        track.connect(panner).connect(context.destination);
+
+        const panningControl = document.querySelector('#panning');
+        
+        
+
+        //listeners
+        mySampleButton.addEventListener('click', () => {
+            if (context.state === 'suspended') {
+                context.resume();
+            }
+
+            if (mySampleButton.dataset.playing === 'false') {
+                audioElement.play();
+                mySampleButton.dataset.playing = 'true';
+            } else if (mySampleButton.dataset.playing === 'true') {
+                audioElement.pause();
+                mySampleButton.dataset.playing = 'false';
+            }
+        });
+        audioElement.addEventListener("ended", () => {
+            mySampleButton.dataset.playing = "false";
+        });
+
+        honkButton.addEventListener('click', () => {
+            const honkAudio = document.querySelector("#goose_honk");
+            honkAudio.play();
+        });
+
+        volumeControl.addEventListener('input', () => {
+            gainNode.gain.value = volumeControl.value;
+        });
+
+        panningControl.addEventListener('input', () => {
+            panner.pan.value = panningControl.value;
+        });
+
+        //function to change the label of the play/pause button
+        function changeLabel() {
+            const playPauseButton = document.querySelector('#my-sample-button');
+            if (playPauseButton.textContent === 'Pause sample music') {
+                playPauseButton.textContent = 'Play sample music';
+            } else {
+                playPauseButton.textContent = 'Pause sample music';
+            }
+        }
+    </script>
+</body>
+
+</html>
