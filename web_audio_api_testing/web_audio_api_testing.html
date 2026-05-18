@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="Author" content="Nicholas Hauptfleisch">
@@ -9,9 +10,13 @@
 
 <body>
     <h1>Web Audio API Testing</h1>
-    <p> Return to <a href="web_audio_api_testing_landing_page.html">Landing Page</a></p><hr>
-    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> is a powerful tool for handling audio in web applications.</p>
-    <p>This page is my first testing using the Web Audio API. I am using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API"> this guide</a> to help</p>
+    <p> Return to <a href="web_audio_api_testing_landing_page.html">Landing Page</a></p>
+    <hr>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> is a powerful tool for
+        handling audio in web applications.</p>
+    <p>This page is my first testing using the Web Audio API. I am using <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API"> this guide</a> to
+        help</p>
 
 
     <!--buttons-->
@@ -24,51 +29,51 @@
     <button id="my-sample-button" data-playing="false" role="switch" aria-checked="false" onclick="changeLabel()">
         Play sample music
     </button><br>
-    
+
 
     <!--range slider for volume control-->
     <p>Gain:
-    <input type="range" id="volume" min="-2" max="0" value="-1" step="0.01" /> <!--I lowk don't understand how web audio API handles gain :(-->
+        <input type="range" id="volume" min="0" max="2" value="1" step="0.01" />
     </p>
 
     <!--range slider for panning control-->
     <p>Panning:
-    <input type="range" id="panning" min="-1" max="1" value="0" step="0.01" />
+        <input type="range" id="panning" min="-1" max="1" value="0" step="0.01" />
     </p>
+    <p>If it sounds distorted at hard panning, thats because of the equal-power panning algorithm. Try adjusting the gain until it sounds good.</p>
+    
 
     <!--audio elements-->
     <audio id="goose_honk" class="sfx">
         <source src="assets/Honk1.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    <audio id="nicholas_hauptfleisch_sample" class="music">
+    <audio id="nicholas_hauptfleisch_sample" class="music" loop="true">
         <source src="assets/nicholas_hauptfleisch_sample.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
- <!--Scripts-->
+
+    <!--Scripts-->
     <script>
         const context = new AudioContext();
         const audioElement = document.querySelector("#nicholas_hauptfleisch_sample");
         const track = context.createMediaElementSource(audioElement);
-        track.connect(context.destination);
 
         const mySampleButton = document.querySelector('#my-sample-button');
         const honkButton = document.querySelector('#honk-button');
 
         const gainNode = context.createGain();
-        gainNode.gain.value = -1; 
-        track.connect(gainNode).connect(context.destination);
-
         const volumeControl = document.querySelector('#volume');
 
         const pannerOptions = { pan: 0 };
         const panner = new StereoPannerNode(context, pannerOptions);
-        track.connect(panner).connect(context.destination);
-
         const panningControl = document.querySelector('#panning');
-        
-        
+
+        track.connect(gainNode).connect(panner).connect(context.destination);
+
+
+
+
 
         //listeners
         mySampleButton.addEventListener('click', () => {
