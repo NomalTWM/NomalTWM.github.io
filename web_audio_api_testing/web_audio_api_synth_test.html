@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="Author" content="Nicholas Hauptfleisch">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Audio API synth Testing</title>
+</head>
+
+<body>
+    <h1>Web Audio API Testing</h1>
+    <p> Return to <a href="web_audio_api_testing_landing_page.html">Landing Page</a></p>
+    <hr>
+    <p>Using Web Audio API to create a simple synthesizer</p>
+
+
+
+    <!--button-->
+    <button id="synth-play-pause" data-playing="false" role="switch" aria-checked="false" onclick="changeLabel()">
+        Play synth
+    </button><br>
+
+
+    <!--Scripts-->
+    <script>
+        const context = new AudioContext();
+        const oscillator = context.createOscillator();
+        const playPauseButton = document.querySelector('#synth-play-pause');
+
+        oscillator.connect(context.destination);
+
+
+
+        //listeners
+        playPauseButton.addEventListener('click', () => {
+
+            if (playPauseButton.getAttribute('data-playing') === 'false') {
+                // Create a fresh oscillator each time
+                osc = context.createOscillator();
+                osc.connect(context.destination);
+
+                osc.start();
+                playPauseButton.setAttribute('data-playing', 'true');
+            } else if (playPauseButton.getAttribute('data-playing') === 'true') {
+                osc.stop();
+                playPauseButton.setAttribute('data-playing', 'false');
+            }
+        });
+
+        //function to change the label of the play/pause button
+        function changeLabel() {
+            const playPauseButton = document.querySelector('#synth-play-pause');
+            if (playPauseButton.textContent === 'Pause synth') {
+                playPauseButton.textContent = 'Play synth';
+            } else {
+                playPauseButton.textContent = 'Pause synth';
+            }
+        }
+    </script>
+</body>
+
+</html>
