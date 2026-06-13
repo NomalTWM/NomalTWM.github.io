@@ -20,17 +20,21 @@
     <button id="synth-play-pause" data-playing="false" role="switch" aria-checked="false" onclick="changeLabel()">
         Play synth
     </button><br>
+     <p>Gain:
+        <input type="range" id="volume" min="0" max="1" value="0.5" step="0.01" />
+    </p>
 
 
     <!--Scripts-->
     <script>
         const context = new AudioContext();
         const oscillator = context.createOscillator();
+        const gainNode = context.createGain();
+        gainNode.gain.value = 0.5; // Set initial gain value
         const playPauseButton = document.querySelector('#synth-play-pause');
+        const volumeSlider = document.querySelector('#volume');
 
-        oscillator.connect(context.destination);
-
-
+        gainNode.connect(context.destination);
 
         //listeners
         playPauseButton.addEventListener('click', () => {
@@ -38,14 +42,26 @@
             if (playPauseButton.getAttribute('data-playing') === 'false') {
                 // Create a fresh oscillator each time
                 osc = context.createOscillator();
-                osc.connect(context.destination);
+                osc.connect(gainNode);
+                gainNode.connect(context.destination);
 
+                gainNode.gain.value = 0.0001;
                 osc.start();
+                while (gainNode.gain.value < volumeSlider.value) {
+                    gainNode.gain.value += 0.00005 *Math.sin(gainNode.gain.value);
+                }
+                gainNode.gain.value = volumeSlider.value; // Set gain to current slider value
                 playPauseButton.setAttribute('data-playing', 'true');
             } else if (playPauseButton.getAttribute('data-playing') === 'true') {
+                while (gainNode.gain.value > 0.01) {
+                    gainNode.gain.value -= 0.00005 * Math.sin(gainNode.gain.value);
+                }
                 osc.stop();
                 playPauseButton.setAttribute('data-playing', 'false');
             }
+        });
+        volumeSlider.addEventListener('input', () => {
+            gainNode.gain.value = volumeSlider.value;
         });
 
         //function to change the label of the play/pause button
@@ -57,6 +73,7 @@
                 playPauseButton.textContent = 'Pause synth';
             }
         }
+
     </script>
 </body>
 
